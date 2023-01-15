@@ -1,0 +1,20 @@
+version: '3.8'
+services:
+  cache-team-service:
+    image: redis:6.2-alpine
+    restart: always
+    ports:
+      - '6379:6379'
+    command: redis-server --save 20 1 --loglevel warning
+    networks:
+      - team-service_default
+    volumes: 
+      - cache:/data
+volumes:
+  cache:
+    driver: local
+
+networks:
+  team-service_default:
+    driver: bridge
+    external: true
